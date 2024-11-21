@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/contact.css">
+</head>
+<body>
+      <nav class="nav">
+        <div class="nav-links">
+            <a href="/" >Home</a>
+            <a href="/latest" >Latest</a>
+            <a href="/about" >About</a>
+            <a href="/contact" >Contact</a>
+            <a href="/register" >Register</a>
+        </div>
+    </nav>
+    <div class="container">
+      <form class="contact-form" id="contactForm">
+        <h1>Get in Touch</h1>
+        
+        <div class="success-message" id="successMessage">
+          Message sent successfully! We'll get back to you soon.
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+          There was an error sending your message. Please try again.
+        </div>
+  
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+  
+        <button type="submit">
+          Send Message
+          <span class="loading" id="loading"></span>
+        </button>
+      </form>
+    </div>
+  
+    <script>
+      document.getElementById('contactForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const form = e.target;
+        const loading = document.getElementById('loading');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // Hide any existing messages
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+        
+        // Show loading spinner
+        loading.style.display = 'inline-block';
+        
+        // Get form data
+        const formData = {
+          name: form.name.value,
+          email: form.email.value,
+          subject: form.subject.value,
+          message: form.message.value
+        };
+        
+        try {
+          const response = await fetch('/submit-contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok) {
+            successMessage.style.display = 'block';
+            form.reset();
+          } else {
+            throw new Error(data.message || 'Error submitting form');
+          }
+        } catch (error) {
+          errorMessage.style.display = 'block';
+          errorMessage.textContent = error.message;
+        } finally {
+          loading.style.display = 'none';
+        }
+      });
+  
+      // 3D hover effect
+      const form = document.querySelector('.contact-form');
+      
+      document.addEventListener('mousemove', (e) => {
+        const rect = form.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 30;
+        const rotateY = -(x - centerX) / 30;
+        
+        form.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+  
+      document.addEventListener('mouseleave', () => {
+        form.style.transform = 'rotateX(0) rotateY(0)';
+      });
+    </script>
+      
+
+</body>
+</html>

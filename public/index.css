@@ -24,6 +24,35 @@ body {
     backdrop-filter: blur(10px);
     justify-content: center;
 }
+.nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    position: relative;
+    padding: 0.5rem;
+  }
+
+.nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #00ff88;
+    transition: width 0.3s;
+  }
+
+  .nav a:hover::after {
+    width: 100%;
+  }
 
 .logo {
     font-size: 1.5rem;

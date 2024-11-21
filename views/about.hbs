@@ -1,109 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/about.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About</title>
+  <link rel="stylesheet" href="/about.css">
 </head>
+
 <body>
-    <div class="floating-shapes">
-        <div id="shape1">⬡</div>
-        <div id="shape2">◆</div>
-        <div id="shape3">⬢</div>
+
+  <nav class="nav">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/latest">Latest</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/register">Register</a></li>
+    </ul>
+  </nav>
+
+  <div class="floating-shapes">
+    <div id="shape1">⬡</div>
+    <div id="shape2">◆</div>
+    <div id="shape3">⬢</div>
+  </div>
+
+  <section class="hero" id="home">
+    <div class="card">
+      <h1>John Doe</h1>
+      <p>Creative Developer & Designer<br>
+        Crafting digital experiences that leave an impression</p>
+      <div class="social-links">
+        <a href="#" class="btn">Portfolio</a>
+        <a href="#" class="btn">Contact</a>
       </div>
-    
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/latest">Latest</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/register" >Register</a></li>
-        </ul>
-      </nav>
-    
-      <section class="hero" id="home">
-        <div class="card">
-          <h1>John Doe</h1>
-          <p>Creative Developer & Designer<br>
-             Crafting digital experiences that leave an impression</p>
-          <div class="social-links">
-            <a href="#" class="btn">Portfolio</a>
-            <a href="#" class="btn">Contact</a>
-          </div>
+    </div>
+  </section>
+
+  <section class="skills" id="skills">
+    <div class="container">
+      <h2>Skills & Expertise</h2>
+      <div class="skill-grid">
+        <div class="skill-card">
+          <h3>Web Development</h3>
+          <p>Creating responsive and modern websites using the latest technologies</p>
         </div>
-      </section>
-    
-      <section class="skills" id="skills">
-        <div class="container">
-          <h2>Skills & Expertise</h2>
-          <div class="skill-grid">
-            <div class="skill-card">
-              <h3>Web Development</h3>
-              <p>Creating responsive and modern websites using the latest technologies</p>
-            </div>
-            <div class="skill-card">
-              <h3>UI/UX Design</h3>
-              <p>Designing intuitive and beautiful user interfaces</p>
-            </div>
-            <div class="skill-card">
-              <h3>3D Animation</h3>
-              <p>Bringing ideas to life with stunning 3D animations</p>
-            </div>
-          </div>
+        <div class="skill-card">
+          <h3>UI/UX Design</h3>
+          <p>Designing intuitive and beautiful user interfaces</p>
         </div>
-      </section>
-    
-      <script>
-        // 3D Card Effect
-        document.addEventListener('mousemove', (e) => {
-          const cards = document.querySelectorAll('.card');
-          cards.forEach(card => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = (y - centerY) / 20;
-            const rotateY = -(x - centerX) / 20;
-            
-            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        <div class="skill-card">
+          <h3>3D Animation</h3>
+          <p>Bringing ideas to life with stunning 3D animations</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // 3D Card Effect
+    document.addEventListener('mousemove', (e) => {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = (y - centerY) / 20;
+        const rotateY = -(x - centerX) / 20;
+
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+    });
+
+    // Reset card rotation when mouse leaves
+    document.addEventListener('mouseleave', () => {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.style.transform = 'rotateX(0) rotateY(0)';
+      });
+    });
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+
+        // Check if the link starts with "#" (indicating an on-page target)
+        if (targetId.startsWith('#')) {
+          e.preventDefault();
+          document.querySelector(targetId).scrollIntoView({
+            behavior: 'smooth'
           });
-        });
-    
-        // Reset card rotation when mouse leaves
-        document.addEventListener('mouseleave', () => {
-          const cards = document.querySelectorAll('.card');
-          cards.forEach(card => {
-            card.style.transform = 'rotateX(0) rotateY(0)';
-          });
-        });
-    
-        // Smooth scroll for navigation
-        document.querySelectorAll('nav a').forEach(anchor => {
-          anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            document.querySelector(targetId).scrollIntoView({
-              behavior: 'smooth'
-            });
-          });
-        });
-    
-        // Parallax effect for floating shapes
-        window.addEventListener('scroll', () => {
-          const shapes = document.querySelectorAll('.floating-shapes div');
-          const scrolled = window.pageYOffset;
-          
-          shapes.forEach((shape, index) => {
-            const speed = (index + 1) * 0.2;
-            shape.style.transform = `translateY(${scrolled * speed}px)`;
-          });
-        });
-      </script>
+        }
+      });
+
+    });
+
+    // Parallax effect for floating shapes
+    window.addEventListener('scroll', () => {
+      const shapes = document.querySelectorAll('.floating-shapes div');
+      const scrolled = window.pageYOffset;
+
+      shapes.forEach((shape, index) => {
+        const speed = (index + 1) * 0.2;
+        shape.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    });
+  </script>
 
 </body>
+
 </html>
